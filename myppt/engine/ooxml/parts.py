@@ -5,7 +5,7 @@ NS_P = 'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r=
 XML_HEAD = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
 
 
-def theme_xml(colors, font="微软雅黑", font_hei="黑体", name="pptlab"):
+def theme_xml(colors, font="微软雅黑", font_hei="黑体", name="myppt"):
     c = colors
     f = esc(font)
     fh = esc(font_hei)
@@ -69,7 +69,7 @@ def app_xml(nslides):
     return XML_HEAD + (
         '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" '
         'xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">'
-        '<Application>pptlab</Application><PresentationFormat>宽屏</PresentationFormat><Slides>%d</Slides><AppVersion>16.0000</AppVersion></Properties>'
+        '<Application>myppt</Application><PresentationFormat>宽屏</PresentationFormat><Slides>%d</Slides><AppVersion>16.0000</AppVersion></Properties>'
     ) % nslides
 
 
@@ -78,7 +78,7 @@ def core_xml(title, created):
         '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
         'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
         'xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-        '<dc:title>%s</dc:title><dc:creator>pptlab</dc:creator><cp:lastModifiedBy>pptlab</cp:lastModifiedBy><cp:revision>1</cp:revision>'
+        '<dc:title>%s</dc:title><dc:creator>myppt</dc:creator><cp:lastModifiedBy>myppt</cp:lastModifiedBy><cp:revision>1</cp:revision>'
         '<dcterms:created xsi:type="dcterms:W3CDTF">%s</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">%s</dcterms:modified>'
         '</cp:coreProperties>'
     ) % (esc(title), created, created)

@@ -1,8 +1,8 @@
 """选系统模板：按内容推荐 3 套（程序定），每套出一张「封面 + 内容页」缩略图给用户挑；用户不选就用第一套。
 
 系统模板 = 6 种风格（封面构图 + 设计语言配套）× 12 套色板 = 72 套。
-  python -m pptlab.pick deck.json                列出推荐的 3 套（和全部 72 套的编号）
-  python -m pptlab.pick deck.json --preview 目录  另外每套生成一份 2 页的预览 pptx（有 soffice 时顺便转成图片）
+  python -m myppt.pick deck.json                列出推荐的 3 套（和全部 72 套的编号）
+  python -m myppt.pick deck.json --preview 目录  另外每套生成一份 2 页的预览 pptx（有 soffice 时顺便转成图片）
 选定后把 brand 写进 deck.json 顶层："brand": {"cover": "...", "palette": "..."}
 """
 import json

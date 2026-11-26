@@ -4,7 +4,7 @@
 PowerPoint 按字体真实字宽换行，这里读同一份字体文件，排版和成品一致。
 找不到字体（或 PPT_REAL_METRICS=off）时回退估算，与 TS 版行为一致。
 
-字体查找顺序：环境变量 PPTLAB_FONT_DIRS → 包内 / SKILL 内 fonts 目录 → 系统字体目录。
+字体查找顺序：环境变量 MYPPT_FONT_DIRS → 包内 / SKILL 内 fonts 目录 → 系统字体目录。
 """
 import os
 import re
@@ -268,7 +268,7 @@ NAME_EQUIV = {
 
 def font_dirs():
     dirs = []
-    env = os.environ.get("PPTLAB_FONT_DIRS")
+    env = os.environ.get("MYPPT_FONT_DIRS")
     if env:
         dirs += [d for d in env.split(os.pathsep) if d]
     here = os.path.dirname(os.path.abspath(__file__))
@@ -386,7 +386,7 @@ def _builtin_em(fam, ch):
 
 def _bundled_dirs():
     out = []
-    env = os.environ.get("PPTLAB_FONT_DIRS")
+    env = os.environ.get("MYPPT_FONT_DIRS")
     if env:
         out += [d for d in env.split(os.pathsep) if d]
     here = os.path.dirname(os.path.abspath(__file__))

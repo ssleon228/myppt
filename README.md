@@ -1,7 +1,7 @@
-# pptlab
+# myppt
 
 会自己设计的 PPT 生成技能（实验版）。纯 Python 标准库（3.8+），零第三方依赖，自带底层排版引擎。
-本仓库根目录就是技能根目录：`SKILL.md`（技能说明和完整流程）、`run.py`（统一入口）、`pptlab/`（代码）。
+本仓库根目录就是技能根目录：`SKILL.md`（技能说明和完整流程）、`run.py`（统一入口）、`myppt/`（代码）。
 
 ```
 python run.py make  deck.json 输出.pptx           # 用系统模板新做
@@ -14,7 +14,7 @@ python run.py test                                 # 自测
 python tools/build_skill.py                        # 打包：完整包（含 Windows Python 和字体）+ 精简包
 ```
 
-版面写法见 `pptlab/LAYOUT.md`，整套模板设计见 `pptlab/BRAND.md`。
+版面写法见 `myppt/LAYOUT.md`，整套模板设计见 `myppt/BRAND.md`。
 
 ## 许可证
 

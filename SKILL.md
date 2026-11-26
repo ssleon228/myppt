@@ -1,15 +1,15 @@
 ---
-name: pptlab
+name: myppt
 description: 实验版 PPT 生成：自己设计版面和整套模板、自动丰富内容；也能用用户上传的 PPT 当模板重做，或在上传的 PPT 上改内容、补空白。用户要做 PPT、改 PPT 时使用。
 ---
 
-# pptlab：会自己设计的 PPT 生成（整体流程）
+# myppt：会自己设计的 PPT 生成（整体流程）
 
 原则：**程序能定的程序定，程序拿不准的问用户，模型只负责理解用户的话和写内容。**
-所有命令都只用 Python 标准库（3.8+），**在本 SKILL.md 所在的文件夹里运行**（下面写的 `python -m pptlab…`）。
+所有命令都只用 Python 标准库（3.8+），**在本 SKILL.md 所在的文件夹里运行**（下面写的 `python -m myppt…`）。
 在别的目录也可以用 `python <本文件夹>/run.py 命令 …`，命令是 make / pick / reuse / edit / enrich / sample-template / test；
-Windows 完整包自带 Python：用 `runtime\python.exe` 代替 `python`，或直接用 `lab.cmd 命令 …`。
-pptlab 自带全部代码（含底层引擎 `pptlab/engine`），不依赖其他技能，也不带任何机构的模板、标志或图片。
+Windows 完整包自带 Python：用 `runtime\python.exe` 代替 `python`，或直接用 `myppt.cmd 命令 …`。
+myppt 自带全部代码（含底层引擎 `myppt/engine`），不依赖其他技能，也不带任何机构的模板、标志或图片。
 
 ## 第一步：确认要做什么（一张三选一卡片）
 
@@ -25,7 +25,7 @@ pptlab 自带全部代码（含底层引擎 `pptlab/engine`），不依赖其他
 
 **用系统模板**
 ```
-python -m pptlab.pick deck.json --preview 预览目录
+python -m myppt.pick deck.json --preview 预览目录
 ```
 程序按内容推荐 3 套（风格互不相同），每套生成「封面 + 一页内容页」的预览图。把 3 张预览图给用户挑。
 用户想看更多就加 `--all`，列出全部 72 套（6 种风格 × 12 套色板）。**用户不选就用第 1 套。**
@@ -33,7 +33,7 @@ python -m pptlab.pick deck.json --preview 预览目录
 
 **用用户自己的模板**
 ```
-python -m pptlab.reuse analyze 上传.pptx
+python -m myppt.reuse analyze 上传.pptx
 ```
 程序认出哪页是封面、目录、章节页、内容页、封底，内容页保留哪些模板元素（Banner、Logo），标题框在哪，内容区多大。
 **把识别结果给用户确认后再生成**；结果里的「需要确认」逐条问用户。
@@ -52,7 +52,7 @@ python -m pptlab.reuse analyze 上传.pptx
 
 ### 1.5 内容自动丰富
 ```
-python -m pptlab.enrich framework "标题和材料摘要" [--no-material] [--search]
+python -m myppt.enrich framework "标题和材料摘要" [--no-material] [--search]
 ```
 程序判断是哪类汇报（业务汇报、工作计划、项目方案、专项问题、工作总结、培训介绍），给出这类汇报该有的部分和写作要求。
 **按这个框架写**，每个内容页带 `"section"` 字段，写明它属于哪一部分。
@@ -60,7 +60,7 @@ python -m pptlab.enrich framework "标题和材料摘要" [--no-material] [--sea
 能算的数让程序算（增幅、同比、完成率、占比、差距），把数据写成 facts.json：
 ```
 [{"name": "车贷余额", "value": 86.4, "unit": "亿元", "last_year": 73.1, "target": 90}]
-python -m pptlab.enrich compute facts.json
+python -m myppt.enrich compute facts.json
 ```
 直接引用程序算好的句子，**不要自己算**。
 
@@ -75,20 +75,20 @@ python -m pptlab.enrich compute facts.json
 
 ### 3. 检查稿子
 ```
-python -m pptlab.enrich check deck.json --material 材料.txt [--facts facts.json] --clean 干净稿.json
+python -m myppt.enrich check deck.json --material 材料.txt [--facts facts.json] --clean 干净稿.json
 ```
 程序查：空话套话、要点没有具体内容、数字在材料里找不到出处、框架漏了部分。
 **有问题就改稿子再查**，直到没有「问题」行。`--clean` 会去掉所有【待补】【需核实】标记和来源，
 **生成 PPT 一律用干净稿**：PPT 上不出现标记，也不出现资料来源。
 
 ### 4. 生成
-- 系统模板：`python -m pptlab 干净稿.json 输出.pptx`
-- 用户模板：`python -m pptlab.reuse build 上传.pptx 干净稿.json 输出.pptx`
+- 系统模板：`python -m myppt 干净稿.json 输出.pptx`
+- 用户模板：`python -m myppt.reuse build 上传.pptx 干净稿.json 输出.pptx`
 
-排版、字号、配色、版式都由程序定。想自己设计某页的排法，按 `pptlab/LAYOUT.md` 写 `layout`，程序会检查，不合格自动改用程序设计。
+排版、字号、配色、版式都由程序定。想自己设计某页的排法，按 `myppt/LAYOUT.md` 写 `layout`，程序会检查，不合格自动改用程序设计。
 
 ### 5. 交付
-- 给出 pptx 和缩略图总览（`pptlab/tools/preview.sh 输出.pptx 目录`）。
+- 给出 pptx 和缩略图总览（`myppt/tools/preview.sh 输出.pptx 目录`）。
 - 在聊天里附上 `enrich check` 打印的清单：**待补**（第几页、哪个位置、缺什么）和**需核实**（第几页、哪个位置、核实什么），
   以及自动搜集的资料来源。这些只在聊天里给，不进 PPT。
 - 生成时程序报告里的提示（比如标题缩了字号、模板没有章节页）也一并告诉用户。
@@ -97,7 +97,7 @@ python -m pptlab.enrich check deck.json --material 材料.txt [--facts facts.jso
 
 ### 1. 程序先读懂这份 PPT
 ```
-python -m pptlab.edit inspect 上传.pptx
+python -m myppt.edit inspect 上传.pptx
 ```
 列出每页每个元素的 [序号]、位置、现有文字，以及 ★可填空位（空文本框、"请输入…"这类提示文字）和 ☐空白区域。
 
@@ -107,7 +107,7 @@ python -m pptlab.edit inspect 上传.pptx
 ### 3. 修改
 把要做的改动写成 ops.json，然后：
 ```
-python -m pptlab.edit apply 上传.pptx ops.json 输出.pptx
+python -m myppt.edit apply 上传.pptx ops.json 输出.pptx
 ```
 ```
 [{"slide": 3, "shape": 11, "text": "326 人\n近两周授信客户"},
@@ -120,7 +120,7 @@ python -m pptlab.edit apply 上传.pptx ops.json 输出.pptx
 - **没提到的页面和元素完全不动。**
 
 ### 4. 交付
-给出修改后的 pptx、改动前后对比图（`pptlab/tools/before_after.sh 上传.pptx 输出.pptx 对比.jpg "3 7"`），
+给出修改后的 pptx、改动前后对比图（`myppt/tools/before_after.sh 上传.pptx 输出.pptx 对比.jpg "3 7"`），
 并列出改了哪几处、有哪些提示。
 
 ## 自测

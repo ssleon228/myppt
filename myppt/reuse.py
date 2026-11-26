@@ -318,8 +318,8 @@ def _cover_slots(rec, H):
 
 
 def build(upload, deck, out_path=None, options=None):
-    """upload：上传的 pptx（路径或字节）；deck：内容（同 pptlab 的 deck JSON）→ (pptx 字节, 报告行)"""
-    from pptlab import enrich as E
+    """upload：上传的 pptx（路径或字节）；deck：内容（同 myppt 的 deck JSON）→ (pptx 字节, 报告行)"""
+    from myppt import enrich as E
     from . import tokens, measure, styles as STY
     from .render import design_page, draw_tree, _pre
     from .engine import api as PA, render as PR
@@ -547,8 +547,8 @@ def _transplant(doc, b, part, data, slide_xml):
 
 
 def main(argv=None):
-    """python -m pptlab.reuse analyze 模板.pptx
-       python -m pptlab.reuse build 模板.pptx deck.json 输出.pptx"""
+    """python -m myppt.reuse analyze 模板.pptx
+       python -m myppt.reuse build 模板.pptx deck.json 输出.pptx"""
     import json
     import sys
     a = list(sys.argv[1:] if argv is None else argv)

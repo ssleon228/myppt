@@ -1,7 +1,7 @@
 """在用户上传的 PPT 上改内容、补空白。
 
-  python -m pptlab.edit inspect in.pptx [--json]          列出每页元素、可填空位、空白区域
-  python -m pptlab.edit apply in.pptx ops.json out.pptx   按 ops 修改，打印改动清单
+  python -m myppt.edit inspect in.pptx [--json]          列出每页元素、可填空位、空白区域
+  python -m myppt.edit apply in.pptx ops.json out.pptx   按 ops 修改，打印改动清单
 
 ops.json 是一个列表，每条一种操作：
   {"slide": 3, "shape": 5, "text": "新文字（换行用 \\n）"}            改文本框（shape 用清单里的 [序号]）

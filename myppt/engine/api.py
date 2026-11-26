@@ -1,6 +1,6 @@
 """对外 API：校验 / 渲染 deck。
 
-    from pptlab.engine import api
+    from myppt.engine import api
     errors = api.validate_deck(doc)                   # [] 表示通过
 """
 import json

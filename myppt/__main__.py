@@ -1,4 +1,4 @@
-"""python -m pptlab deck.json out.pptx [--off] [--json] [--cover=.. --palette=.. --mood=.. --primary=.. --pattern=.. --banner=.. --org=..]
+"""python -m myppt deck.json out.pptx [--off] [--json] [--cover=.. --palette=.. --mood=.. --primary=.. --pattern=.. --banner=.. --org=..]
 
 带 --cover/--palette 等参数，或 deck.json 顶层有 "brand" 时，用 AI 设计的模板（程序画）；否则用 deck 指定的现成模板。"""
 import json

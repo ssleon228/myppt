@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 setlocal
-rem 用法：lab.cmd 命令 参数…（命令见 run.py；把 deck.json 拖到本文件上 = 在同目录生成同名 .pptx）
+rem 用法：myppt.cmd 命令 参数…（命令见 run.py；把 deck.json 拖到本文件上 = 在同目录生成同名 .pptx）
 set "HERE=%~dp0"
 set "PY="
 if exist "%HERE%runtime\python.exe" set "PY="%HERE%runtime\python.exe""

@@ -2,9 +2,9 @@
 """打包技能：python tools/build_skill.py [--out dist] [--no-runtime]
 
 产物：
-  dist/pptlab/                 解压即用的目录（技能根目录 = SKILL.md 所在的文件夹）
-  dist/pptlab-<版本>.zip       完整包（含 Windows 自带 Python，电脑上没装 Python 也能用）
-  dist/pptlab-<版本>-lite.zip  精简包（需本机 Python 3.8+）
+  dist/myppt/                 解压即用的目录（技能根目录 = SKILL.md 所在的文件夹）
+  dist/myppt-<版本>.zip       完整包（含 Windows 自带 Python，电脑上没装 Python 也能用）
+  dist/myppt-<版本>-lite.zip  精简包（需本机 Python 3.8+）
 
 不带任何字体，也不要求安装字体。Windows Python 首次打包时下载到 tools/cache/（不进 git）。
 """
@@ -20,8 +20,8 @@ ROOT = os.path.dirname(HERE)
 CACHE = os.path.join(HERE, "cache")
 PY_VER = "3.12.10"
 VERSION = "0.1.0"
-FILES = ["SKILL.md", "README.md", "LICENSE", "run.py", "lab.cmd", "lab.sh"]
-DIRS = ["pptlab"]
+FILES = ["SKILL.md", "README.md", "LICENSE", "run.py", "myppt.cmd", "myppt.sh"]
+DIRS = ["myppt"]
 
 
 def _get(url):
@@ -78,7 +78,7 @@ def _ignore(_, names):
 
 
 def build(out, runtime=True):
-    dst = os.path.join(out, "pptlab")
+    dst = os.path.join(out, "myppt")
     shutil.rmtree(dst, ignore_errors=True)
     os.makedirs(dst)
     for f in FILES:
@@ -95,12 +95,12 @@ def build(out, runtime=True):
                     b = b.replace(b"\n", b"\r\n")
                 with open(p, "wb") as f:
                     f.write(b)
-    lite = os.path.join(out, "pptlab-%s-lite.zip" % VERSION)
+    lite = os.path.join(out, "myppt-%s-lite.zip" % VERSION)
     _zip(dst, lite)
     full = None
     if runtime:
         shutil.copytree(ensure_runtime(), os.path.join(dst, "runtime"))
-        full = os.path.join(out, "pptlab-%s.zip" % VERSION)
+        full = os.path.join(out, "myppt-%s.zip" % VERSION)
         _zip(dst, full)
     return dst, full, lite
 

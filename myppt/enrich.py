@@ -300,9 +300,9 @@ def report_text(res, sources=()):
 
 
 def main(argv=None):
-    """python -m pptlab.enrich framework "标题和材料摘要" [--no-material] [--search]
-       python -m pptlab.enrich compute facts.json
-       python -m pptlab.enrich check deck.json [--material 材料.txt] [--facts facts.json] [--clean 输出.json]"""
+    """python -m myppt.enrich framework "标题和材料摘要" [--no-material] [--search]
+       python -m myppt.enrich compute facts.json
+       python -m myppt.enrich check deck.json [--material 材料.txt] [--facts facts.json] [--clean 输出.json]"""
     a = list(sys.argv[1:] if argv is None else argv)
     if len(a) >= 2 and a[0] == "framework":
         sid, hits = detect_scenario(a[1])

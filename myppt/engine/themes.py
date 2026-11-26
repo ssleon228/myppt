@@ -1,5 +1,5 @@
 """主题：通用内置风格（默认第一套）+ 显式传入的模板目录（<id>/template.json）。
-不读任何默认模板目录；实验版的整套模板由 pptlab.brand 画，用户模板由 pptlab.reuse 处理。
+不读任何默认模板目录；实验版的整套模板由 myppt.brand 画，用户模板由 myppt.reuse 处理。
 """
 import copy
 import json

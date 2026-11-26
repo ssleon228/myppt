@@ -2,7 +2,7 @@
 
 和真实世界里很多公司模板一样：母版是空的，Banner、标志、页脚直接画在每一页上；
 有封面、目录、章节页、内容页（含「请输入…」提示框和留白）、封底。公司名是虚构的「示例公司」。
-    python -m pptlab.tools.make_test_template 输出.pptx
+    python -m myppt.tools.make_test_template 输出.pptx
 """
 import os
 import sys

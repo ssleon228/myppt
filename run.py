@@ -1,4 +1,4 @@
-"""pptlab 统一入口（在任何目录都能调用）：
+"""myppt 统一入口（在任何目录都能调用）：
   python run.py make  deck.json 输出.pptx          用系统模板新做（不写 brand 就用推荐的第 1 套）
   python run.py pick  deck.json --preview 目录      推荐 3 套系统模板并出预览
   python run.py reuse analyze|build 上传.pptx ...   用用户的 PPT 当模板
@@ -13,8 +13,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-MODS = {"make": "pptlab", "pick": "pptlab.pick", "reuse": "pptlab.reuse", "edit": "pptlab.edit",
-        "enrich": "pptlab.enrich", "sample-template": "pptlab.tools.make_test_template"}
+MODS = {"make": "myppt", "pick": "myppt.pick", "reuse": "myppt.reuse", "edit": "myppt.edit",
+        "enrich": "myppt.enrich", "sample-template": "myppt.tools.make_test_template"}
 
 
 def main():
@@ -25,7 +25,7 @@ def main():
     cmd, rest = a[0], a[1:]
     if cmd == "test":
         import unittest
-        suite = unittest.defaultTestLoader.loadTestsFromName("pptlab.tests.test_lab")
+        suite = unittest.defaultTestLoader.loadTestsFromName("myppt.tests.test_lab")
         return 0 if unittest.TextTestRunner(verbosity=1).run(suite).wasSuccessful() else 1
     if cmd not in MODS:
         if cmd.endswith(".json"):  # 直接给 deck.json：当作 make

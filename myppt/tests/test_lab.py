@@ -1,4 +1,4 @@
-"""pptlab（实验版：程序/AI 设计版面）测试"""
+"""myppt（实验版：程序/AI 设计版面）测试"""
 import io
 import json
 import re
@@ -6,10 +6,10 @@ import os
 import unittest
 import zipfile
 
-from pptlab import render as R, measure
-from pptlab.spec import normalize
-from pptlab.solver import Solver
-from pptlab.engine import render as PR, api
+from myppt import render as R, measure
+from myppt.spec import normalize
+from myppt.solver import Solver
+from myppt.engine import render as PR, api
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 EX = os.path.join(HERE, "..", "examples")
@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
 class BrandTest(unittest.TestCase):
     def test_palettes_pass_contrast(self):
-        from pptlab.palette import PALETTES, build, contrast
+        from myppt.palette import PALETTES, build, contrast
         for pid in list(PALETTES) + [None]:
             for spec in ({"palette": pid} if pid else {"primary": "FFE680"}, {"primary": "33CC33"}, {"primary": "777777"}):
                 pal, _ = build(spec)
@@ -99,18 +99,18 @@ class BrandTest(unittest.TestCase):
                 self.assertGreaterEqual(contrast(pal["muted"], "FFFFFF"), 4.5, spec)
 
     def test_mood_picks_palette(self):
-        from pptlab.palette import pick_by_mood
+        from myppt.palette import pick_by_mood
         self.assertEqual(pick_by_mood("党建 政务"), "ink-red")
         self.assertEqual(pick_by_mood("科技 数字化"), "indigo-cyan")
 
     def test_bad_choices_fall_back(self):
-        from pptlab.brand import Brand, COVERS
+        from myppt.brand import Brand, COVERS
         b = Brand({"cover": "spaceship", "pattern": "plaid", "palette": "nope", "logo": "missing.png"}, "标题")
         self.assertIn(b.cover, COVERS)
         self.assertTrue(any("找不到" in n for n in b.notes))
 
     def test_all_covers_render(self):
-        from pptlab.brand import COVERS
+        from myppt.brand import COVERS
         with open(SAMPLE, encoding="utf-8") as f:
             doc = json.load(f)
         for c in COVERS:
@@ -134,14 +134,14 @@ class FlairTest(unittest.TestCase):
     """第四批：从人工模板里学来的、机器能自动做的设计手法"""
 
     def test_number_highlight(self):
-        from pptlab.blocks import hl_runs
+        from myppt.blocks import hl_runs
         r = hl_runs("新签 4S 店 37 家，2026 年放款 12.6 亿元，占 58%", "000000", "FF0000")
         bold = [x["text"].strip() for x in r if x["options"].get("bold")]
         self.assertEqual(bold, ["37 家", "12.6 亿元", "58%"])
         self.assertIsNone(hl_runs("没有数字", "000000", "FF0000"))
 
     def test_emphasize_first_kpi(self):
-        from pptlab import styles as STY
+        from myppt import styles as STY
         STY.use("corporate")
         t = {"box": "row", "children": [{"el": "kpi", "value": "1", "style": "soft"} for _ in range(3)]}
         STY.emphasize(t)
@@ -153,8 +153,8 @@ class FlairTest(unittest.TestCase):
         STY.use("corporate")
 
     def test_orbs_and_seq(self):
-        from pptlab.solver import Solver
-        from pptlab.spec import normalize
+        from myppt.solver import Solver
+        from myppt.spec import normalize
         t, _, er = normalize({"box": "col", "children": [{"el": "orbs", "items": [{"head": "甲", "text": "一"}] * 4}]})
         self.assertFalse(er)
         self.assertTrue(Solver(t).solve()["ok"])
@@ -163,8 +163,8 @@ class FlairTest(unittest.TestCase):
         self.assertEqual(len(res["seq"][0]), 3)
 
     def test_top_row_not_stretched(self):
-        from pptlab.solver import Solver
-        from pptlab.spec import normalize
+        from myppt.solver import Solver
+        from myppt.spec import normalize
         t, _, _ = normalize({"box": "row", "children": [{"el": "text", "text": "短", "style": "soft"}] * 3})
         res = Solver(t).solve()
         self.assertLess(res["cards"][0][1][3], 500)
@@ -176,15 +176,15 @@ class EditTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         import tempfile, os
-        from pptlab.render import render_deck_file
+        from myppt.render import render_deck_file
         cls.tmp = tempfile.mkdtemp()
         cls.src = os.path.join(cls.tmp, "src.pptx")
         here = os.path.dirname(os.path.abspath(__file__))
-        from pptlab.tools.make_test_template import build
+        from myppt.tools.make_test_template import build
         build(cls.src)  # 中性的通用模板样例
 
     def test_inventory_and_edit(self):
-        from pptlab import pptxio as X
+        from myppt import pptxio as X
         d = X.Doc(self.src)
         inv = X.inventory(d)
         self.assertGreater(len(inv), 3)
@@ -201,7 +201,7 @@ class EditTest(unittest.TestCase):
         self.assertEqual(changed, [rec["part"]])  # 只有这一页变了
 
     def test_fill_blank(self):
-        from pptlab import pptxio as X
+        from myppt import pptxio as X
         d = X.Doc(self.src)
         inv = X.inventory(d)
         end = len(inv)  # 封底一般有空白
@@ -219,7 +219,7 @@ class EditTest(unittest.TestCase):
 
 class EnrichTest(unittest.TestCase):
     def test_compute(self):
-        from pptlab import enrich as E
+        from myppt import enrich as E
         t = [c["text"] for c in E.compute([{"name": "余额", "value": 86.4, "unit": "亿元", "last_year": 73.1, "target": 90},
                                            {"name": "不良率", "value": "0.62%", "prev": "0.70%"}])]
         self.assertIn("余额同比增长 18.2%（73.1 → 86.4亿元）", t)
@@ -227,7 +227,7 @@ class EnrichTest(unittest.TestCase):
         self.assertIn("不良率较上期下降 0.08 个百分点", t)
 
     def test_check_and_clean(self):
-        from pptlab import enrich as E
+        from myppt import enrich as E
         deck = {"pages": [{"type": "bullets", "title": "余额 86.4 亿元", "section": "总体情况",
                            "items": ["进一步加强管控，持续提升质量", "新签 37 家【需核实：家数】", "不良率下降【待补：降幅】", "同业 1.2%"]}]}
         r = E.check(deck, "余额 86.4 亿元", [], "report")
@@ -247,12 +247,12 @@ class ReuseTest(unittest.TestCase):
 
     def test_build_from_upload(self):
         import tempfile
-        from pptlab.render import render_deck_file
-        from pptlab import reuse as RU, pptxio as X
+        from myppt.render import render_deck_file
+        from myppt import reuse as RU, pptxio as X
         tmp = tempfile.mkdtemp()
         here = os.path.dirname(os.path.abspath(__file__))
         src = os.path.join(tmp, "up.pptx")
-        from pptlab.tools.make_test_template import build
+        from myppt.tools.make_test_template import build
         build(src)
         d = X.Doc(src)
         ana = RU.analyze(d)
@@ -271,7 +271,7 @@ class ReuseTest(unittest.TestCase):
 
 class PickTest(unittest.TestCase):
     def test_recommend(self):
-        from pptlab import pick
+        from myppt import pick
         self.assertEqual(len(pick.all_templates()), 72)
         r = pick.recommend("2027 年数字化转型规划：数据平台与科技创新")
         self.assertEqual(len(r), 3)
