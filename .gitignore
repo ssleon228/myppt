@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pptx
+*.pdf
+*.jpg
+dist/
+tools/cache/
