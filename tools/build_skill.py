@@ -20,7 +20,7 @@ ROOT = os.path.dirname(HERE)
 CACHE = os.path.join(HERE, "cache")
 PY_VER = "3.12.10"
 VERSION = "0.1.0"
-FILES = ["SKILL.md", "README.md", "run.py", "lab.cmd", "lab.sh"]
+FILES = ["SKILL.md", "README.md", "LICENSE", "run.py", "lab.cmd", "lab.sh"]
 DIRS = ["pptlab"]
 
 

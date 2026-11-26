@@ -15,3 +15,7 @@ python tools/build_skill.py                        # 打包：完整包（含 Wi
 ```
 
 版面写法见 `pptlab/LAYOUT.md`，整套模板设计见 `pptlab/BRAND.md`。
+
+## 许可证
+
+MIT，见 [LICENSE](LICENSE)。
